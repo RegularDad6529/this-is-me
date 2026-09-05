@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This is Me</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+<div id="app">
+<header>
+<h1>This is Me</h1>
+<p class="subtitle">A visual board of PFPs held by any 6529 profile or wallet</p>
+<div class="search-bar">
+<select id="input-mode">
+<option value="handle">6529 Handle</option>
+<option value="wallet">Wallet Address</option>
+</select>
+<input type="text" id="handle-input" placeholder="Enter 6529 handle (e.g. punk6529)" autocomplete="off" spellcheck="false">
+<button id="load-btn">Load</button>
+</div>
+<div class="controls" id="controls" style="display:none;">
+<div class="control-group">
+<label class="switch">
+<input type="checkbox" id="auto-rotate-toggle">
+<span class="slider"></span>
+</label>
+<span class="control-label">Auto-rotate</span>
+</div>
+<div class="control-group" id="collection-filter-group" style="display:none;">
+<input type="text" id="collection-search" placeholder="Search collections to curate allowlist..." autocomplete="off">
+<button id="add-to-allowlist" disabled>Add to allowlist</button>
+</div>
+</div>
+<div id="status" class="status"></div>
+<div id="profile-info" class="profile-info" style="display:none;"></div>
+</header>
+<main>
+<div id="board" class="board"></div>
+<div id="empty-state" class="empty-state" style="display:none;">
+<p>No PFP collections found for this profile.</p>
+<p class="muted">Try a different handle or wallet address above.</p>
+</div>
+</main>
+<footer>
+<p>Powered by <a href="https://6529.io" target="_blank">6529.io API</a> · <a href="https://github.com/RegularDad6529/this-is-me" target="_blank">GitHub</a></p>
+</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

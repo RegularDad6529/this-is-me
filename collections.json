@@ -1,0 +1,28 @@
+{
+  "blocklist": [
+    "0x33fd426905f149f8376e227d0c9d3340aad17af1",
+    "0x0c58ef43ff3032005e472cb5709f8908acb00205",
+    "0x45882f9bc325e14fbb298a1df930c43a874b83ae",
+    "0x523255c86c6633762a367952f45fabf53ae92993",
+    "0x49fa3b13be7e28845d0cdead815dcfd083d4b28c",
+    "0x8b9effab5a396d58df06893d63f8735e466ad0fc",
+    "0x63292720a5c1c751b43699fea9343e5ab556e88c"
+  ],
+  "blocklist_names": [
+    "The Memes by 6529",
+    "6529 Gradient",
+    "NextGen 6529",
+    "6529 Holiday Cards",
+    "Where My Meme Goes",
+    "Karen Army",
+    "SeizerDAO"
+  ],
+  "allowlist": [],
+  "allowlist_overrides": {},
+  "settings": {
+    "auto_rotate_seconds": 5,
+    "grid_min_width": 200,
+    "grid_gap": 16,
+    "image_type": "thumbnail"
+  }
+}
