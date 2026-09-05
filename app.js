@@ -67,6 +67,28 @@ const KNOWN_PFP_CONTRACTS = {
   '0x8365382935f0fb94b9f0b07524b535ec13d35ad7': 'gristle buddeez worldwide',
   '0xee9ee1f4f3324e84e52f23c6ee9ae59e85c28a4e': 'Autocompose PFP',
   '0xc143923eddaeec04a96c43d97284612d1134e837': 'Emoji PFP',
+
+  // --- PFPs discovered from 6529 community profiles ---
+  // (Madacollects, David, Blocknoob, Arsonic, EzMonet, gpebbles)
+  '0x04fdc08598f50ffb09ae9a063b04c1227a546d7e': 'Trippin Ape Tribe',
+  '0x0419791b7874f7bb719acc521a4dc8f95d7880d5': 'Dusktopia',
+  '0x277f448a4d43318ea626fd224b3bf77295387d68': 'SeizeTheMeebs',
+  '0xd564c25b760cb278a55bdd98831f4ff4b6c97b38': 'Sugartown Oras',
+  '0x387c41b0b2f1128de44db1bcf8baad085f26392c': 'Argonauts',
+  '0x93a796b1e846567fe3577af7b7bb89f71680173a': 'ChainFaces Arena',
+  '0x740c178e10662bbb050bde257bfa318defe3cabc': '8liens',
+  '0x9a3611cc9654b8efcf458ac6d79889aa0a30ca57': 'Uldor Guardians',
+  '0x585a2c37858d3b03824bc683829e4dbbf58969ee': 'CryptoJunks',
+  '0x358cb4411bb8e1896efe07a50a52cc192e3c02c4': 'Noosphere Tribe',
+  '0x55afd2187d7c312bf7e4ca7393a139df19f1f096': 'Low Quality Cats',
+  '0x46ccb782da782b9e921dd447736ab64fc4fb2636': 'Doggo Verse',
+  '0x5041a99684d38e280e4b0b356185bf18c991f88b': 'Satoshis Legions',
+  '0xbe3eedda303d28e1a763106e27605247ab8e302a': 'Apemo Army',
+  '0x0ceff6a7da56452e78c5dc5c492b2d0807cd4411': 'BITDAWGS',
+  '0xd3cd44f07744da3a6e60a4b5fda1370400ad515b': 'Octopie (Pieland)',
+  '0x6c475044bea380fb3cf93d0c9847a177fdd1c797': 'Blvck Paris',
+  '0x4923017f3b7fac4e096b46e401c0662f0b7e393f': 'Buzzed Bear Hideout',
+  '0x38efc0a312ac9e1ac84bb4cda061e6e043d09346': 'Berserkers',
 };
 
 // State
