@@ -30,7 +30,7 @@ const KNOWN_PFP_CONTRACTS = {
   '0x306b1ea7ec203dd5887a4235d98c5e4ea5f3d7f1': 'Beanz (RTFKT)',
 
   // --- Other popular PFPs ---
-  '0x495f947276749ce646f68ac8c248420045cb7b5e': 'Otherdeed (Otherside)',
+
   '0x1a92f7381b9f03921564a437210bb9396471050c': 'Cool Cats',
   '0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6': 'Cryptoadz',
   '0x79fcdef22feed20eddacbb2587640e45491b757f': 'mfer',
