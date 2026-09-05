@@ -3,7 +3,7 @@
 
 const API_BASE = 'https://api.6529.io/api';
 const RPC_URL = 'https://eth.drpc.org';
-const IPFS_GATEWAY = 'https://ipfs.io/ipfs/';
+const IPFS_GATEWAY = 'https://dweb.link/ipfs/';
 
 // Known PFP collections (contract address lowercase -> name)
 // These are collections tracked by 6529's xTDH system that are PFP-type
@@ -229,20 +229,26 @@ async function loadProfile(handle) {
     currentProfile = identity;
     showProfileInfo(identity);
 
-    statusEl.textContent = 'Fetching NFT holdings...';
-    const ck = identity.consolidation_key;
-    allHoldings = [];
-    let page = 1;
-    while (true) {
-      const resp = await fetch(`${API_BASE}/nft-owners/consolidation/${ck}?page_size=100&page=${page}`);
-      const data = await resp.json();
-      allHoldings = allHoldings.concat(data.data || []);
-      statusEl.textContent = `Fetching NFT holdings... ${allHoldings}/${data.count}`;
-      if (!data.next) break;
-      page++;
+    // Get all wallet addresses from the 6529 identity
+    const wallets = (identity.wallets || []).map(w => 
+      typeof w === 'string' ? w : (w.address || w.wallet || w)
+    ).filter(w => w && /^0x[a-fA-F0-9]{40}$/.test(w));
+
+    if (wallets.length === 0 && identity.primary_wallet) {
+      wallets.push(identity.primary_wallet);
     }
 
-    statusEl.textContent = `Found ${allHoldings.length} NFTs. Filtering PFPs...`;
+    // Query Alchemy for each wallet to find PFP holdings
+    // (6529 nft-owners API only tracks 6529-indexed collections, not external PFPs)
+    statusEl.textContent = `Scanning ${wallets.length} wallet${wallets.length !== 1 ? 's' : ''} for PFPs...`;
+    allHoldings = [];
+    for (let i = 0; i < wallets.length; i++) {
+      statusEl.textContent = `Scanning wallet ${i + 1}/${wallets.length} for PFPs...`;
+      const walletHoldings = await fetchWalletNFTsOnChain(wallets[i]);
+      allHoldings = allHoldings.concat(walletHoldings);
+    }
+
+    statusEl.textContent = `Found ${allHoldings.length} PFPs. Loading images...`;
     const byContract = groupByContract(allHoldings);
     const pfpCollections = filterPFPCollections(byContract);
 
@@ -362,10 +368,18 @@ async function fetchWalletNFTsOnChain(address) {
       // Check if this is a known PFP collection
       if (contract in KNOWN_PFP_CONTRACTS) {
         const media = nft.media?.[0] || {};
-        const img = media.gateway || media.thumbnail || '';
+        let img = media.gateway || media.thumbnail || '';
+        // For IPFS URLs, use images.weserv.nl as a CORS-friendly proxy
+        if (img.startsWith('ipfs://')) {
+          const cid = img.replace('ipfs://', '');
+          img = 'https://images.weserv.nl/?url=' + encodeURIComponent('dweb.link/ipfs/' + cid);
+        } else if (img.includes('ipfs.io/ipfs/')) {
+          const path = img.replace(/^https?:\/\/ipfs\.io\/ipfs\//, '');
+          img = 'https://images.weserv.nl/?url=' + encodeURIComponent('dweb.link/ipfs/' + path);
+        }
         holdings.push({
           contract,
-          token_id: parseInt(tokenId, 16) || tokenId,
+          token_id: parseInt(tokenId) || tokenId,
           balance: parseInt(nft.balance || '1'),
           image: img,
           name: nft.title || `#${tokenId}`,
@@ -454,17 +468,29 @@ async function loadCollectionImages(contract, tokens, holdings) {
   }
   if (!info.name) info.name = formatAddress(contract);
 
-  if (holdings.some(h => h.image)) {
-    // Images already provided by Alchemy
+  if (holdings && holdings.some(h => h.contract === contract && h.image)) {
+    // Images already provided by Alchemy — use them, but fall back for tokens with no image
     info.tokens = tokens.map(t => {
       const h = holdings.find(h => h.contract === contract && h.token_id === t.token_id);
       return {
         id: t.token_id,
         name: h?.name || `#${t.token_id}`,
         image: h?.image || '',
-        source: 'alchemy'
+        source: h?.image ? 'alchemy' : 'pending'
       };
     });
+    // For any tokens with no Alchemy image, try on-chain tokenURI
+    for (const token of info.tokens) {
+      if (token.source === 'pending' && !token.image) {
+        try {
+          const img = await fetchExternalImage(contract, token.id);
+          token.image = img;
+          token.source = img ? 'external' : 'failed';
+        } catch (e) {
+          token.source = 'failed';
+        }
+      }
+    }
     return info;
   }
 
@@ -587,9 +613,12 @@ async function resolveTokenURI(hexResult, tokenId) {
     let imgUrl = metadata.image || metadata.image_url || '';
 
     if (imgUrl.startsWith('ipfs://')) {
-      imgUrl = IPFS_GATEWAY + imgUrl.replace('ipfs://', '');
+      const path = imgUrl.replace('ipfs://', '');
+      imgUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent('dweb.link/ipfs/' + path);
     } else if (imgUrl.startsWith('ipfs/')) {
-      imgUrl = IPFS_GATEWAY + imgUrl.replace('ipfs/', '');
+      imgUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent('dweb.link/ipfs/' + imgUrl.replace('ipfs/', ''));
+    } else if (imgUrl.includes('ipfs.io/ipfs/')) {
+      imgUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(imgUrl.replace(/^https?:\/\//, ''));
     }
 
     return imgUrl;
