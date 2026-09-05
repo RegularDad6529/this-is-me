@@ -63,6 +63,8 @@ const KNOWN_PFP_CONTRACTS = {
   '0x42069abfe407c60cf4ae4112bedead391dba1cdb': 'CryptoDickbutts S3',
   '0xb038c86e3293de253bdd1f800a048e2ab6e57104': 'OGs by JakNFT',
   '0xc178994cb9b66307cd62db8b411759dd36d9c2ee': 'COCKPUNCH by Tim Ferriss',
+  '0xda149c88e6340118644f29039f94790722f1bbb6': 'OMbuilder',
+  '0x8365382935f0fb94b9f0b07524b535ec13d35ad7': 'gristle buddeez worldwide',
   '0xee9ee1f4f3324e84e52f23c6ee9ae59e85c28a4e': 'Autocompose PFP',
   '0xc143923eddaeec04a96c43d97284612d1134e837': 'Emoji PFP',
 };
