@@ -95,6 +95,21 @@ const KNOWN_PFP_CONTRACTS = {
   '0x6bf14d09f5600ed683abce94b6c43f7cb429d308': 'dwellers (abyss)',
   '0x38793a3fdfd098e820ddf59706280681354341fc': 'BRAINROT',
   '0x2589382740f0fcca04945792688bdc210b524825': 'Twisted Tweaks',
+
+  // --- 6529 ecosystem PFP collections (user-requested) ---
+  '0x8b9effab5a396d58df06893d63f8735e466ad0fc': 'Karen Army',
+  '0x075f90ff6b89a1c164fb352bebd0a16f55804ca2': 'Death and Taxes: Evaders',
+  '0x4f249b2dc6cecbd549a0c354bbfc4919e8c5d3ae': 'Death and Taxes: Citizens',
+  '0xb1a3b92e35e8a8c34b9f5e4e918c49421331d269': 'P⊙RTR∆ITS',
+  '0x6d0de90cdc47047982238fcf69944555d27ecb25': 'Regulars',
+  '0x078be86f3104a32313a47815792230a3808642cc': 'On-Chain All-Stars',
+  '0xf253a9212542c1f8c4a2a953530a9d891fa90e93': 'hailDraconis',
+  '0x6c1ab37ae847af0d0381f5792b457ae4f41e1aa1': 'Handjabs',
+  '0xf0031782d37819f8e209c4421c774ed1f6163052': 'fine art mfers',
+  '0x2c6be7c57236dd16179f90544bed94f879db5e4f': '4 Horsemen',
+  '0x010fc13ce976a857f0c5dad4148224f78b96a3ae': 'Creatures by pixeljunkie',
+  '0xcedede955eb2e776f8aa511771946eab67dfd5f0': 'It was always the eyes',
+  '0x96246927030094c22782ec9921f082d024536982': 'CREYNIUMS',
 };
 
 // State
