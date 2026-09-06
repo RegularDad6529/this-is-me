@@ -89,6 +89,12 @@ const KNOWN_PFP_CONTRACTS = {
   '0x6c475044bea380fb3cf93d0c9847a177fdd1c797': 'Blvck Paris',
   '0x4923017f3b7fac4e096b46e401c0662f0b7e393f': 'Buzzed Bear Hideout',
   '0x38efc0a312ac9e1ac84bb4cda061e6e043d09346': 'Berserkers',
+
+  // --- PFPs found in RD's wallets ---
+  '0x143b34034701b159e90ffb2dc2deabb822fff5b4': 'dwellers',
+  '0x6bf14d09f5600ed683abce94b6c43f7cb429d308': 'dwellers (abyss)',
+  '0x38793a3fdfd098e820ddf59706280681354341fc': 'BRAINROT',
+  '0x2589382740f0fcca04945792688bdc210b524825': 'Twisted Tweaks',
 };
 
 // State
