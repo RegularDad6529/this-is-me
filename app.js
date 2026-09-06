@@ -110,7 +110,15 @@ const KNOWN_PFP_CONTRACTS = {
   '0x010fc13ce976a857f0c5dad4148224f78b96a3ae': 'Creatures by pixeljunkie',
   '0xcedede955eb2e776f8aa511771946eab67dfd5f0': 'It was always the eyes',
   '0x96246927030094c22782ec9921f082d024536982': 'CREYNIUMS',
+  '0x19bb64b80cbf61e61965b0e5c2560cc7364c6546': 'CREYZIES',
 };
+
+// Art Blocks shared contract (0xa7d8d9ef...) hosts many projects.
+// Only specific projects on it are PFPs — filter by token title.
+const ART_BLOCKS_PFP_PROJECTS = [
+  'ghost in the code',
+];
+const ART_BLOCKS_CONTRACT = '0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270';
 
 // State
 let config = { blocklist: [], blocklist_names: [], allowlist: [], allowlist_overrides: {}, settings: {} };
@@ -407,7 +415,11 @@ async function fetchWalletNFTsOnChain(address) {
       if (!contract || !tokenId) continue;
       
       // Check if this is a known PFP collection
-      if (contract in KNOWN_PFP_CONTRACTS) {
+      const isKnownPFP = contract in KNOWN_PFP_CONTRACTS;
+      const isArtBlocksPFP = contract === ART_BLOCKS_CONTRACT &&
+        ART_BLOCKS_PFP_PROJECTS.some(p => (nft.title || '').toLowerCase().includes(p));
+      
+      if (isKnownPFP || isArtBlocksPFP) {
         const media = nft.media?.[0] || {};
         let img = media.gateway || media.thumbnail || '';
         // For IPFS URLs, use images.weserv.nl as a CORS-friendly proxy
@@ -485,7 +497,10 @@ function filterPFPCollections(byContract) {
     if (isBlocked) continue;
 
     // Only include known PFP collections
-    const isPFP = contract in KNOWN_PFP_CONTRACTS;
+    const isPFP = contract in KNOWN_PFP_CONTRACTS ||
+      (contract === ART_BLOCKS_CONTRACT && tokens.some(t =>
+        ART_BLOCKS_PFP_PROJECTS.some(p => (t.name || '').toLowerCase().includes(p))
+      ));
     if (isPFP) {
       result[contract] = tokens;
     }
@@ -497,7 +512,7 @@ function filterPFPCollections(byContract) {
 // --- Load Images ---
 async function loadCollectionImages(contract, tokens, holdings) {
   const info = {
-    name: KNOWN_PFP_CONTRACTS[contract] || '',
+    name: KNOWN_PFP_CONTRACTS[contract] || (contract === ART_BLOCKS_CONTRACT ? 'Ghost in the Code' : ''),
     tokens: [],
     displayIndex: 0
   };
